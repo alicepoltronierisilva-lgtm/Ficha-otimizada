@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Paranormal - Agente</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --accent-yellow: #f39c12;
+            --accent-gold: #ffcc00;
+            --text-color: #c5c6c7;
+            --danger-red: #e74c3c;
+            --san-blue: #2980b9;
+            --pe-green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            border-bottom: 1px solid var(--accent-yellow);
+            padding-bottom: 5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-yellow);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+        }
+
+        input, select {
+            background-color: #0b0c10;
+            border: 1px solid var(--accent-yellow);
+            color: #fff;
+            padding: 8px;
+            font-family: inherit;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .stat-box {
+            background-color: #0b0c10;
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-box.pv { border-color: var(--danger-red); }
+        .stat-box.san { border-color: var(--san-blue); }
+        .stat-box.pe { border-color: var(--pe-green); }
+
+        .stat-box input {
+            width: 80%;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .attributes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .attr-box {
+            background-color: #0b0c10;
+            border: 1px solid var(--accent-yellow);
+            padding: 10px 5px;
+        }
+
+        .attr-box input {
+            width: 80%;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Rolador de Dados */
+        .dice-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .dice-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .result-box {
+            background-color: #0b0c10;
+            border: 2px dashed var(--accent-yellow);<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Paranormal - Agente</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --accent-yellow: #f39c12;
+            --accent-gold: #ffcc00;
+            --text-color: #c5c6c7;
+            --danger-red: #e74c3c;
+            --san-blue: #2980b9;
+            --pe-green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            border-bottom: 1px solid var(--accent-yellow);
+            padding-bottom: 5px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-yellow);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(243, 156, 18, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--accent-gold);
+        }
+
+        input, select {
+            background-color: #0b0c10;
+            border: 1px solid var(--accent-yellow);
+            color: #fff;
+            padding: 8px;
+            font-family: inherit;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .stat-box {
+            background-color: #0b0c10;
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .stat-box.pv { border-color: var(--danger-red); }
+        .stat-box.san { border-color: var(--san-blue); }
+        .stat-box.pe { border-color: var(--pe-green); }
+
+        .stat-box input {
+            width: 80%;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .attributes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .attr-box {
+            background-color: #0b0c10;
+            border: 1px solid var(--accent-yellow);
+            padding: 10px 5px;
+        }
+
+        .attr-box input {
+            width: 80%;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Rolador de Dados */
+        .dice-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .dice-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .result-box {
+            background-color: #0b0c10;
+            border: 2px dashed var(--accent-yellow);
+            padding: 15px;
+            text-align: center;
+            min-height: 80px;
+        }
+
+        .result-total {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .result-details {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .history {
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #0b0c10;
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #222;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">-- Registro de Agente --</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>Dados do Agente</h2>
+            <div class="form-group">
+                <label>Nome do Agente:</label>
+                <input type="text" placeholder="Ex: Joui Jouki">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Classe:</label>
+                    <input type="text" placeholder="Ex: Combatente">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>NEX:</label>
+                    <input type="text" placeholder="Ex: 15%">
+                </div>
+            </div>
+
+            <h3>Status Vital</h3>
+            <div class="stats-grid">
+                <div class="stat-box pv">
+                    <label style="color: var(--danger-red);">PV A/M</label>
+                    <input type="number" id="pv-atual" value="20"> / 
+                    <input type="number" id="pv-max" value="20">
+                </div>
+                <div class="stat-box san">
+                    <label style="color: var(--san-blue);">SAN A/M</label>
+                    <input type="number" id="san-atual" value="15"> / 
+                    <input type="number" id="san-max" value="15">
+                </div>
+                <div class="stat-box pe">
+                    <label style="color: var(--pe-green);">PE A/M</label>
+                    <input type="number" id="pe-atual" value="5"> / 
+                    <input type="number" id="pe-max" value="5">
+                </div>
+            </div>
+
+            <h3>Atributos</h3>
+            <div class="attributes">
+                <div class="attr-box">
+                    <label>AGI</label>
+                    <input type="number" id="attr-agi" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>FOR</label>
+                    <input type="number" id="attr-for" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>INT</label>
+                    <input type="number" id="attr-int" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>PRE</label>
+                    <input type="number" id="attr-pre" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>VIG</label>
+                    <input type="number" id="attr-vig" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="card dice-section">
+            <h2>Terminal de Rolagem</h2>
+            
+            <div class="dice-controls">
+                <div class="form-group">
+                    <label>Qtd. de Dados (D20):</label>
+                    <input type="number" id="dice-count" value="1" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Dado:</label>
+                    <select id="dice-type">
+                        <option value="20">d20 (Testes)</option>
+                        <option value="6">d6 (Dano/Efeitos)</option>
+                        <option value="8">d8 (Dano)</option>
+                        <option value="10">d10 (Dano)</option>
+                        <option value="12">d12 (Dano)</option>
+                        <option value="100">d100 (Porcentagem)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Bônus / Perícia (+/-):</label>
+                <input type="number" id="dice-bonus" value="0">
+            </div>
+
+            <button onclick="rollDice()">Rolar Dados</button>
+
+            <div class="result-box">
+                <div class="result-details" id="roll-details">Aguardando rolagem...</div>
+                <div class="result-total" id="roll-total">-</div>
+            </div>
+
+            <h3>Histórico de Testes</h3>
+            <div class="history" id="history-log">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function rollDice() {
+            const count = parseInt(document.getElementById('dice-count').value) || 1;
+            const sides = parseInt(document.getElementById('dice-type').value);
+            const bonus = parseInt(document.getElementById('dice-bonus').value) || 0;
+
+            let rolls = [];
+            for (let i = 0; i < count; i++) {
+                rolls.push(Math.floor(Math.random() * sides) + 1);
+            }
+
+            let total = 0;
+            let detailsText = "";
+
+            // Regra Ordem Paranormal para d20: pega o MAIOR dado.
+            // Para outros dados (como dano), soma todos os dados.
+            if (sides === 20) {
+                const bestRoll = Math.max(...rolls);
+                total = bestRoll + bonus;
+                detailsText = `Dados: [${rolls.join(', ')}] | Maior: ${bestRoll} | Bônus: ${bonus >= 0 ? '+' : ''}${bonus}`;
+            } else {
+                const sum = rolls.reduce((a, b) => a + b, 0);
+                total = sum + bonus;
+                detailsText = `Dados: [${rolls.join(' + ')}] | Bônus: ${bonus >= 0 ? '+' : ''}${bonus}`;
+            }
+
+            // Atualiza o Display principal
+            document.getElementById('roll-total').innerText = total;
+            document.getElementById('roll-details').innerText = detailsText;
+
+            // Adiciona ao Histórico
+            const historyLog = document.getElementById('history-log');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'history-item';
+            newEntry.innerHTML = `<strong>${total}</strong> <small>(${count}d${sides}${bonus >= 0 ? '+' : ''}${bonus}) → ${detailsText}</small>`;
+            historyLog.prepend(newEntry);
+        }
+    </script>
+</body>
+</html>
+            padding: 15px;
+            text-align: center;
+            min-height: 80px;
+        }
+
+        .result-total {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .result-details {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .history {
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #0b0c10;
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #222;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">-- Registro de Agente --</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>Dados do Agente</h2>
+            <div class="form-group">
+                <label>Nome do Agente:</label>
+                <input type="text" placeholder="Ex: Joui Jouki">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Classe:</label>
+                    <input type="text" placeholder="Ex: Combatente">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>NEX:</label>
+                    <input type="text" placeholder="Ex: 15%">
+                </div>
+            </div>
+
+            <h3>Status Vital</h3>
+            <div class="stats-grid">
+                <div class="stat-box pv">
+                    <label style="color: var(--danger-red);">PV A/M</label>
+                    <input type="number" id="pv-atual" value="20"> / 
+                    <input type="number" id="pv-max" value="20">
+                </div>
+                <div class="stat-box san">
+                    <label style="color: var(--san-blue);">SAN A/M</label>
+                    <input type="number" id="san-atual" value="15"> / 
+                    <input type="number" id="san-max" value="15">
+                </div>
+                <div class="stat-box pe">
+                    <label style="color: var(--pe-green);">PE A/M</label>
+                    <input type="number" id="pe-atual" value="5"> / 
+                    <input type="number" id="pe-max" value="5">
+                </div>
+            </div>
+
+            <h3>Atributos</h3>
+            <div class="attributes">
+                <div class="attr-box">
+                    <label>AGI</label>
+                    <input type="number" id="attr-agi" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>FOR</label>
+                    <input type="number" id="attr-for" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>INT</label>
+                    <input type="number" id="attr-int" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>PRE</label>
+                    <input type="number" id="attr-pre" value="1">
+                </div>
+                <div class="attr-box">
+                    <label>VIG</label>
+                    <input type="number" id="attr-vig" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="card dice-section">
+            <h2>Terminal de Rolagem</h2>
+            
+            <div class="dice-controls">
+                <div class="form-group">
+                    <label>Qtd. de Dados (D20):</label>
+                    <input type="number" id="dice-count" value="1" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Dado:</label>
+                    <select id="dice-type">
+                        <option value="20">d20 (Testes)</option>
+                        <option value="6">d6 (Dano/Efeitos)</option>
+                        <option value="8">d8 (Dano)</option>
+                        <option value="10">d10 (Dano)</option>
+                        <option value="12">d12 (Dano)</option>
+                        <option value="100">d100 (Porcentagem)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Bônus / Perícia (+/-):</label>
+                <input type="number" id="dice-bonus" value="0">
+            </div>
+
+            <button onclick="rollDice()">Rolar Dados</button>
+
+            <div class="result-box">
+                <div class="result-details" id="roll-details">Aguardando rolagem...</div>
+                <div class="result-total" id="roll-total">-</div>
+            </div>
+
+            <h3>Histórico de Testes</h3>
+            <div class="history" id="history-log">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function rollDice() {
+            const count = parseInt(document.getElementById('dice-count').value) || 1;
+            const sides = parseInt(document.getElementById('dice-type').value);
+            const bonus = parseInt(document.getElementById('dice-bonus').value) || 0;
+
+            let rolls = [];
+            for (let i = 0; i < count; i++) {
+                rolls.push(Math.floor(Math.random() * sides) + 1);
+            }
+
+            let total = 0;
+            let detailsText = "";
+
+            // Regra Ordem Paranormal para d20: pega o MAIOR dado.
+            // Para outros dados (como dano), soma todos os dados.
+            if (sides === 20) {
+                const bestRoll = Math.max(...rolls);
+                total = bestRoll + bonus;
+                detailsText = `Dados: [${rolls.join(', ')}] | Maior: ${bestRoll} | Bônus: ${bonus >= 0 ? '+' : ''}${bonus}`;
+            } else {
+                const sum = rolls.reduce((a, b) => a + b, 0);
+                total = sum + bonus;
+                detailsText = `Dados: [${rolls.join(' + ')}] | Bônus: ${bonus >= 0 ? '+' : ''}${bonus}`;
+            }
+
+            // Atualiza o Display principal
+            document.getElementById('roll-total').innerText = total;
+            document.getElementById('roll-details').innerText = detailsText;
+
+            // Adiciona ao Histórico
+            const historyLog = document.getElementById('history-log');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'history-item';
+            newEntry.innerHTML = `<strong>${total}</strong> <small>(${count}d${sides}${bonus >= 0 ? '+' : ''}${bonus}) → ${detailsText}</small>`;
+            historyLog.prepend(newEntry);
+        }
+    </script>
+</body>
+</html>
